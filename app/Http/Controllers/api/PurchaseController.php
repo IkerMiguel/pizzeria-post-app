@@ -80,7 +80,27 @@ class PurchaseController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $validated = $request->validate([
+            'supplier_id' => 'required|numeric|exists:suppliers,id',
+            'raw_material_id' => 'required|numeric|exists:raw_materials,id',
+            'quantity' => 'required|numeric|min:0.01',
+            'purchase_price' => 'required|numeric|min:0',
+            'purchase_date' => 'required|date'
+        ]);
+
+        $purchase = Purchase::find($id);
+        if (!$purchase) {
+            return response()->json(['message' => 'Compra no encontrada.'], 404);
+        }
+
+        $purchase->supplier_id = $request->supplier_id;
+        $purchase->raw_material_id = $request->raw_material_id;
+        $purchase->quantity = $request->quantity;
+        $purchase->purchase_price = $request->purchase_price;
+        $purchase->purchase_date = $request->purchase_date;
+        $purchase->save();
+
+        return response()->json(['purchase' => $purchase]);
     }
 
     /**
