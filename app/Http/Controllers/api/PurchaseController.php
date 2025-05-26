@@ -5,8 +5,6 @@ namespace App\Http\Controllers\api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Purchase;
-use App\Models\Supplier;
-use App\Models\RawMaterial;
 use Illuminate\Support\Facades\DB;
 
 class PurchaseController extends Controller
@@ -64,8 +62,12 @@ class PurchaseController extends Controller
             return response()->json(['message' => 'Compra no encontrada.'], 404);
         }
 
-        $suppliers = Supplier::orderBy('name')->get();
-        $rawMaterials = RawMaterial::orderBy('name')->get();
+        $suppliers = DB::table('suppliers')
+        ->orderBy('name')
+        ->get();
+        $rawMaterials = DB::table('raw_materials')
+        ->orderBy('name')
+        ->get();
 
         return response()->json([
             'purchase' => $purchase,

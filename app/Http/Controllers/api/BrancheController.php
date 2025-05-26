@@ -23,21 +23,21 @@ class BrancheController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
+        /*$validated = $request->validate([
             'name' => ['required', 'max:255'],
             'address' => ['required', 'max:255'],
         ]);
 
         if ($validated->fails()) {
             return json_encode(['msj' => 'Error de validación', 'statuscode' => 400]);
-        }
+        }*/
 
-        $branch = new Branch();
-        $branch->name = $request->name;
-        $branch->address = $request->address;
-        $branch->save();
+        $branche = new Branche();
+        $branche->name = $request->name;
+        $branche->address = $request->address;
+        $branche->save();
 
-        return json_encode(['branch' => $branch]);
+        return json_encode(['branche' => $branche]);
     }
 
     /**
@@ -45,12 +45,12 @@ class BrancheController extends Controller
      */
     public function show(string $id)
     {
-        $branch = Branch::find($id);
-        if (is_null($branch)) {
+        $branche = Branche::find($id);
+        if (is_null($branche)) {
             return abort(404);
         }
 
-        return json_encode(['branch' => $branch]);
+        return json_encode(['branche' => $branche]);
     }
 
     /**
@@ -59,24 +59,20 @@ class BrancheController extends Controller
     public function update(Request $request, string $id)
     {
         $validated = $request->validate([
-            'name' => ['required', 'max:255'],
-            'address' => ['required', 'max:255'],
+        'name' => ['required', 'max:255'],
+        'address' => ['required', 'max:255'],
         ]);
 
-        if ($validated->fails()) {
-            return json_encode(['msj' => 'Error de validación', 'statuscode' => 400]);
-        }
-
-        $branch = Branch::find($id);
-        if (is_null($branch)) {
+        $branche = Branche::find($id);
+        if (is_null($branche)) {
             return abort(404);
         }
 
-        $branch->name = $request->name;
-        $branch->address = $request->address;
-        $branch->save();
+        $branche->name = $request->name;
+        $branche->address = $request->address;
+        $branche->save();
 
-        return json_encode(['branch' => $branch]);
+        return json_encode(['branche' => $branche]);
     }
 
     /**
@@ -84,12 +80,12 @@ class BrancheController extends Controller
      */
     public function destroy(string $id)
     {
-         $branch = Branch::find($id);
-        if (is_null($branch)) {
+         $branche = Branche::find($id);
+        if (is_null($branche)) {
             return abort(404);
         }
 
-        $branch->delete();
+        $branche->delete();
 
         $branches = DB::table('branches')->get();
         return json_encode(['branches' => $branches, 'success' => true]);

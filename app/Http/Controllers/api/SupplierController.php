@@ -23,14 +23,10 @@ class SupplierController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'name' => ['required', 'max:255'],
-            'contact_info' => ['nullable', 'max:255'],
-        ]);
-
-        if ($validated->fails()) {
-            return json_encode(['msj' => 'Error de validación', 'statuscode' => 400]);
-        }
+        $request->validate([
+        'name' => ['required', 'max:255'],
+        'contact_info' => ['nullable', 'max:255'],
+    ]);
 
         $supplier = new Supplier();
         $supplier->name = $request->name;
@@ -58,14 +54,10 @@ class SupplierController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $validated = $request->validate([
-            'name' => ['required', 'max:255'],
-            'contact_info' => ['nullable', 'max:255'],
-        ]);
-
-        if ($validated->fails()) {
-            return json_encode(['msj' => 'Error de validación', 'statuscode' => 400]);
-        }
+        $request->validate([
+        'name' => ['required', 'max:255'],
+        'contact_info' => ['nullable', 'max:255'],
+    ]);
 
         $supplier = Supplier::find($id);
         if (is_null($supplier)) {

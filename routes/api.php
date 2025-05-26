@@ -8,6 +8,9 @@ use App\Http\Controllers\api\Raw_materialController;
 use App\Http\Controllers\api\Pizza_raw_materialController;
 use App\Http\Controllers\api\PurchaseController;
 use App\Http\Controllers\api\Order_extra_ingredientController;
+use App\Http\Controllers\api\PizzaController;
+use App\Http\Controllers\api\OrderController;
+use App\Http\Controllers\api\Extra_ingredientController;
 
 
 Route::get('/user', function (Request $request) {
@@ -55,3 +58,12 @@ Route::post('/pizza-raw-materials', [Pizza_raw_materialController::class, 'store
 Route::get('/pizza-raw-materials/{id}', [Pizza_raw_materialController::class, 'show']);
 Route::put('/pizza-raw-materials/{id}', [Pizza_raw_materialController::class, 'update']);
 Route::delete('/pizza-raw-materials/{id}', [Pizza_raw_materialController::class, 'destroy']);
+
+//Pizza
+Route::get('/pizzas', [PizzaController::class, 'index']);
+
+//order
+Route::get('/orders', [OrderController::class, 'index']);
+
+//Extra Ingredient
+Route::get('/extra-ingredients', [Extra_ingredientController::class, 'index']);
