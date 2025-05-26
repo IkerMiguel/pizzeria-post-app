@@ -4,7 +4,7 @@ namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\OrderExtraIngredient;
+use App\Models\Order_extra_ingredient;
 use Illuminate\Support\Facades\DB;
 
 class Order_extra_ingredientController extends Controller

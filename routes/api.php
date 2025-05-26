@@ -26,3 +26,10 @@ Route::post('/order-extra-ingredients', [OrderExtraIngredientController::class, 
 Route::get('/order-extra-ingredients/{id}', [OrderExtraIngredientController::class, 'show']);
 Route::put('/order-extra-ingredients/{id}', [OrderExtraIngredientController::class, 'update']);
 Route::delete('/order-extra-ingredients/{id}', [OrderExtraIngredientController::class, 'destroy']);
+
+//Branch
+Route::get('/branches', [BranchController::class, 'index']);
+Route::post('/branches', [BranchController::class, 'store']);
+Route::get('/branches/{id}', [BranchController::class, 'show']);
+Route::put('/branches/{id}', [BranchController::class, 'update']);
+Route::delete('/branches/{id}', [BranchController::class, 'destroy']);
