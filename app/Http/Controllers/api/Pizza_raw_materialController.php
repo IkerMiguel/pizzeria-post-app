@@ -28,17 +28,13 @@ class Pizza_raw_materialController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'pizza_id' => ['required', 'numeric'],
-            'raw_material_id' => ['required', 'numeric'],
-            'quantity' => ['required', 'numeric'],
-        ]);
+           $validated = $request->validate([
+                'pizza_id' => ['required', 'numeric'],
+                'raw_material_id' => ['required', 'numeric'],
+                'quantity' => ['required', 'numeric'],
+            ]);
 
-        if ($validated->fails()) {
-            return json_encode(['msj' => 'Error de validación', 'statuscode' => 400]);
-        }
-
-        $item = new PizzaRawMaterial();
+        $item = new Pizza_raw_material();
         $item->pizza_id = $request->pizza_id;
         $item->raw_material_id = $request->raw_material_id;
         $item->quantity = $request->quantity;
@@ -52,7 +48,7 @@ class Pizza_raw_materialController extends Controller
      */
     public function show(string $id)
     {
-        $item = PizzaRawMaterial::find($id);
+        $item = Pizza_raw_material::find($id);
         if (is_null($item)) {
             return abort(404);
         }
@@ -65,17 +61,13 @@ class Pizza_raw_materialController extends Controller
      */
     public function update(Request $request, string $id)
     {
-         $validated = $request->validate([
+        $validated = $request->validate([
             'pizza_id' => ['required', 'numeric'],
             'raw_material_id' => ['required', 'numeric'],
             'quantity' => ['required', 'numeric'],
         ]);
 
-        if ($validated->fails()) {
-            return json_encode(['msj' => 'Error de validación', 'statuscode' => 400]);
-        }
-
-        $item = PizzaRawMaterial::find($id);
+        $item = Pizza_raw_material::find($id);
         if (is_null($item)) {
             return abort(404);
         }
@@ -93,7 +85,7 @@ class Pizza_raw_materialController extends Controller
      */
     public function destroy(string $id)
     {
-        $item = PizzaRawMaterial::find($id);
+        $item = Pizza_raw_material::find($id);
         if (is_null($item)) {
             return abort(404);
         }

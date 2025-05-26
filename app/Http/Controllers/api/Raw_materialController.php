@@ -23,17 +23,15 @@ class Raw_materialController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
+        $request->validate([
             'name' => ['required', 'max:255'],
             'unit' => ['required', 'max:50'],
             'current_stock' => ['required', 'numeric'],
         ]);
 
-        if ($validated->fails()) {
-            return json_encode(['msj' => 'Error de validación', 'statuscode' => 400]);
-        }
 
-        $material = new RawMaterial();
+
+        $material = new Raw_material();
         $material->name = $request->name;
         $material->unit = $request->unit;
         $material->current_stock = $request->current_stock;
@@ -47,7 +45,7 @@ class Raw_materialController extends Controller
      */
     public function show(string $id)
     {
-        $material = RawMaterial::find($id);
+        $material = Raw_material::find($id);
         if (is_null($material)) {
             return abort(404);
         }
@@ -60,17 +58,13 @@ class Raw_materialController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $validated = $request->validate([
+        $request->validate([
             'name' => ['required', 'max:255'],
             'unit' => ['required', 'max:50'],
             'current_stock' => ['required', 'numeric'],
         ]);
 
-        if ($validated->fails()) {
-            return json_encode(['msj' => 'Error de validación', 'statuscode' => 400]);
-        }
-
-        $material = RawMaterial::find($id);
+        $material = Raw_material::find($id);
         if (is_null($material)) {
             return abort(404);
         }
@@ -88,7 +82,7 @@ class Raw_materialController extends Controller
      */
     public function destroy(string $id)
     {
-        $material = RawMaterial::find($id);
+        $material = Raw_material::find($id);
         if (is_null($material)) {
             return abort(404);
         }
