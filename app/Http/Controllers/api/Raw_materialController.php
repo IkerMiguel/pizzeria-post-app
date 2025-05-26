@@ -4,6 +4,8 @@ namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Raw_material;
+use Illuminate\Support\Facades\DB;
 
 class Raw_materialController extends Controller
 {
@@ -12,7 +14,8 @@ class Raw_materialController extends Controller
      */
     public function index()
     {
-        //
+        $materials = DB::table('raw_materials')->get();
+        return json_encode(['raw_materials' => $materials]);
     }
 
     /**
@@ -20,7 +23,23 @@ class Raw_materialController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'name' => ['required', 'max:255'],
+            'unit' => ['required', 'max:50'],
+            'current_stock' => ['required', 'numeric'],
+        ]);
+
+        if ($validated->fails()) {
+            return json_encode(['msj' => 'Error de validación', 'statuscode' => 400]);
+        }
+
+        $material = new RawMaterial();
+        $material->name = $request->name;
+        $material->unit = $request->unit;
+        $material->current_stock = $request->current_stock;
+        $material->save();
+
+        return json_encode(['raw_material' => $material]);
     }
 
     /**
@@ -28,7 +47,12 @@ class Raw_materialController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $material = RawMaterial::find($id);
+        if (is_null($material)) {
+            return abort(404);
+        }
+
+        return json_encode(['raw_material' => $material]);
     }
 
     /**
