@@ -4,6 +4,8 @@ namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Branche;
+use Illuminate\Support\Facades\DB;
 
 class BracheController extends Controller
 {
@@ -12,7 +14,8 @@ class BracheController extends Controller
      */
     public function index()
     {
-        //
+        $branches = DB::table('branches')->get();
+        return json_encode(['branches' => $branches]);
     }
 
     /**
@@ -20,7 +23,21 @@ class BracheController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'name' => ['required', 'max:255'],
+            'address' => ['required', 'max:255'],
+        ]);
+
+        if ($validated->fails()) {
+            return json_encode(['msj' => 'Error de validación', 'statuscode' => 400]);
+        }
+
+        $branch = new Branch();
+        $branch->name = $request->name;
+        $branch->address = $request->address;
+        $branch->save();
+
+        return json_encode(['branch' => $branch]);
     }
 
     /**
@@ -28,7 +45,12 @@ class BracheController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $branch = Branch::find($id);
+        if (is_null($branch)) {
+            return abort(404);
+        }
+
+        return json_encode(['branch' => $branch]);
     }
 
     /**
