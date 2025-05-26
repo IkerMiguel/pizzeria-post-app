@@ -58,7 +58,25 @@ class BracheController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $validated = $request->validate([
+            'name' => ['required', 'max:255'],
+            'address' => ['required', 'max:255'],
+        ]);
+
+        if ($validated->fails()) {
+            return json_encode(['msj' => 'Error de validación', 'statuscode' => 400]);
+        }
+
+        $branch = Branch::find($id);
+        if (is_null($branch)) {
+            return abort(404);
+        }
+
+        $branch->name = $request->name;
+        $branch->address = $request->address;
+        $branch->save();
+
+        return json_encode(['branch' => $branch]);
     }
 
     /**
