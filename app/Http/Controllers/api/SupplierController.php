@@ -84,6 +84,14 @@ class SupplierController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $supplier = Supplier::find($id);
+        if (is_null($supplier)) {
+            return abort(404);
+        }
+
+        $supplier->delete();
+
+        $suppliers = DB::table('suppliers')->get();
+        return json_encode(['suppliers' => $suppliers, 'success' => true]);
     }
 }
