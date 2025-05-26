@@ -93,6 +93,19 @@ class Order_extra_ingredientController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $item = OrderExtraIngredient::find($id);
+        if (is_null($item)) {
+            return abort(404);
+        }
+
+        $item->delete();
+
+        $items = DB::table('order_extra_ingredient')
+            ->join('orders', 'order_extra_ingredient.order_id', '=', 'orders.id')
+            ->join('extra_ingredients', 'order_extra_ingredient.extra_ingredient_id', '=', 'extra_ingredients.id')
+            ->select('order_extra_ingredient.*', 'orders.id as order_id', 'extra_ingredients.name as ingredient_name')
+            ->get();
+
+        return json_encode(['items' => $items, 'success' => true]);
     }
 }
