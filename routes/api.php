@@ -2,7 +2,20 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\api\BranchController;
+use App\Http\Controllers\api\SupplierController;
+use App\Http\Controllers\api\RawMaterialController;
+use App\Http\Controllers\api\PizzaRawMaterialController;
+use App\Http\Controllers\api\PurchaseController;
+use App\Http\Controllers\api\OrderExtraIngredientController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
+
+//Purchase 
+Route::get('/purchases', [PurchaseController::class, 'index']);
+Route::post('/purchases', [PurchaseController::class, 'store']);
+Route::get('/purchases/{id}', [PurchaseController::class, 'show']);
+Route::put('/purchases/{id}', [PurchaseController::class, 'update']);
+Route::delete('/purchases/{id}', [PurchaseController::class, 'destroy']);
