@@ -58,7 +58,25 @@ class SupplierController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $validated = $request->validate([
+            'name' => ['required', 'max:255'],
+            'contact_info' => ['nullable', 'max:255'],
+        ]);
+
+        if ($validated->fails()) {
+            return json_encode(['msj' => 'Error de validación', 'statuscode' => 400]);
+        }
+
+        $supplier = Supplier::find($id);
+        if (is_null($supplier)) {
+            return abort(404);
+        }
+
+        $supplier->name = $request->name;
+        $supplier->contact_info = $request->contact_info;
+        $supplier->save();
+
+        return json_encode(['supplier' => $supplier]);
     }
 
     /**
