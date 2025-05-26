@@ -84,6 +84,14 @@ class BracheController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+         $branch = Branch::find($id);
+        if (is_null($branch)) {
+            return abort(404);
+        }
+
+        $branch->delete();
+
+        $branches = DB::table('branches')->get();
+        return json_encode(['branches' => $branches, 'success' => true]);
     }
 }
