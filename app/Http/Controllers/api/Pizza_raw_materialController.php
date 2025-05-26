@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Pizza_raw_material;
 use Illuminate\Support\Facades\DB;
 
-class Pizaa_raw_materialController extends Controller
+class Pizza_raw_materialController extends Controller
 {
     /**
      * Display a listing of the resource.

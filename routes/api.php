@@ -2,12 +2,13 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\api\BranchController;
+use App\Http\Controllers\api\BrancheController;
 use App\Http\Controllers\api\SupplierController;
-use App\Http\Controllers\api\RawMaterialController;
-use App\Http\Controllers\api\PizzaRawMaterialController;
+use App\Http\Controllers\api\Raw_materialController;
+use App\Http\Controllers\api\Pizza_raw_materialController;
 use App\Http\Controllers\api\PurchaseController;
-use App\Http\Controllers\api\OrderExtraIngredientController;
+use App\Http\Controllers\api\Order_extra_ingredientController;
+
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -21,18 +22,18 @@ Route::put('/purchases/{id}', [PurchaseController::class, 'update']);
 Route::delete('/purchases/{id}', [PurchaseController::class, 'destroy']);
 
 //order extra ingredient
-Route::get('/order-extra-ingredients', [OrderExtraIngredientController::class, 'index']);
-Route::post('/order-extra-ingredients', [OrderExtraIngredientController::class, 'store']);
-Route::get('/order-extra-ingredients/{id}', [OrderExtraIngredientController::class, 'show']);
-Route::put('/order-extra-ingredients/{id}', [OrderExtraIngredientController::class, 'update']);
-Route::delete('/order-extra-ingredients/{id}', [OrderExtraIngredientController::class, 'destroy']);
+Route::get('/order-extra-ingredients', [Order_extra_ingredientController::class, 'index']);
+Route::post('/order-extra-ingredients', [Order_extra_ingredientController::class, 'store']);
+Route::get('/order-extra-ingredients/{id}', [Order_extra_ingredientController::class, 'show']);
+Route::put('/order-extra-ingredients/{id}', [Order_extra_ingredientController::class, 'update']);
+Route::delete('/order-extra-ingredients/{id}', [Order_extra_ingredientController::class, 'destroy']);
 
 //Branch
-Route::get('/branches', [BranchController::class, 'index']);
-Route::post('/branches', [BranchController::class, 'store']);
-Route::get('/branches/{id}', [BranchController::class, 'show']);
-Route::put('/branches/{id}', [BranchController::class, 'update']);
-Route::delete('/branches/{id}', [BranchController::class, 'destroy']);
+Route::get('/branches', [BrancheController::class, 'index']);
+Route::post('/branches', [BrancheController::class, 'store']);
+Route::get('/branches/{id}', [BrancheController::class, 'show']);
+Route::put('/branches/{id}', [BrancheController::class, 'update']);
+Route::delete('/branches/{id}', [BrancheController::class, 'destroy']);
 
 //Supplier
 Route::get('/suppliers', [SupplierController::class, 'index']);
@@ -42,15 +43,15 @@ Route::put('/suppliers/{id}', [SupplierController::class, 'update']);
 Route::delete('/suppliers/{id}', [SupplierController::class, 'destroy']);
 
 //Raw Material
-Route::get('/raw-materials', [RawMaterialController::class, 'index']);
-Route::post('/raw-materials', [RawMaterialController::class, 'store']);
-Route::get('/raw-materials/{id}', [RawMaterialController::class, 'show']);
-Route::put('/raw-materials/{id}', [RawMaterialController::class, 'update']);
-Route::delete('/raw-materials/{id}', [RawMaterialController::class, 'destroy']);
+Route::get('/raw-materials', [Raw_materialController::class, 'index']);
+Route::post('/raw-materials', [Raw_materialController::class, 'store']);
+Route::get('/raw-materials/{id}', [Raw_materialController::class, 'show']);
+Route::put('/raw-materials/{id}', [Raw_materialController::class, 'update']);
+Route::delete('/raw-materials/{id}', [Raw_materialController::class, 'destroy']);
 
 //Pizza Raw Material
-Route::get('/pizza-raw-materials', [PizzaRawMaterialController::class, 'index']);
-Route::post('/pizza-raw-materials', [PizzaRawMaterialController::class, 'store']);
-Route::get('/pizza-raw-materials/{id}', [PizzaRawMaterialController::class, 'show']);
-Route::put('/pizza-raw-materials/{id}', [PizzaRawMaterialController::class, 'update']);
-Route::delete('/pizza-raw-materials/{id}', [PizzaRawMaterialController::class, 'destroy']);
+Route::get('/pizza-raw-materials', [Pizza_raw_materialController::class, 'index']);
+Route::post('/pizza-raw-materials', [Pizza_raw_materialController::class, 'store']);
+Route::get('/pizza-raw-materials/{id}', [Pizza_raw_materialController::class, 'show']);
+Route::put('/pizza-raw-materials/{id}', [Pizza_raw_materialController::class, 'update']);
+Route::delete('/pizza-raw-materials/{id}', [Pizza_raw_materialController::class, 'destroy']);
