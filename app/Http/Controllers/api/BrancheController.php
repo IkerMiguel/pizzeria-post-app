@@ -7,10 +7,10 @@ use Illuminate\Http\Request;
 use App\Models\Branche;
 use Illuminate\Support\Facades\DB;
 
-class BracheController extends Controller
+class BrancheController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the resource. 
      */
     public function index()
     {
