@@ -19,3 +19,10 @@ Route::post('/purchases', [PurchaseController::class, 'store']);
 Route::get('/purchases/{id}', [PurchaseController::class, 'show']);
 Route::put('/purchases/{id}', [PurchaseController::class, 'update']);
 Route::delete('/purchases/{id}', [PurchaseController::class, 'destroy']);
+
+//order extra ingredient
+Route::get('/order-extra-ingredients', [OrderExtraIngredientController::class, 'index']);
+Route::post('/order-extra-ingredients', [OrderExtraIngredientController::class, 'store']);
+Route::get('/order-extra-ingredients/{id}', [OrderExtraIngredientController::class, 'show']);
+Route::put('/order-extra-ingredients/{id}', [OrderExtraIngredientController::class, 'update']);
+Route::delete('/order-extra-ingredients/{id}', [OrderExtraIngredientController::class, 'destroy']);
