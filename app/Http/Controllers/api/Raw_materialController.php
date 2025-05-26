@@ -60,7 +60,27 @@ class Raw_materialController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $validated = $request->validate([
+            'name' => ['required', 'max:255'],
+            'unit' => ['required', 'max:50'],
+            'current_stock' => ['required', 'numeric'],
+        ]);
+
+        if ($validated->fails()) {
+            return json_encode(['msj' => 'Error de validación', 'statuscode' => 400]);
+        }
+
+        $material = RawMaterial::find($id);
+        if (is_null($material)) {
+            return abort(404);
+        }
+
+        $material->name = $request->name;
+        $material->unit = $request->unit;
+        $material->current_stock = $request->current_stock;
+        $material->save();
+
+        return json_encode(['raw_material' => $material]);
     }
 
     /**
