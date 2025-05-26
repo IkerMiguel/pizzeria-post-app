@@ -93,6 +93,19 @@ class Pizaa_raw_materialController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $item = PizzaRawMaterial::find($id);
+        if (is_null($item)) {
+            return abort(404);
+        }
+
+        $item->delete();
+
+        $items = DB::table('pizza_raw_material')
+            ->join('pizzas', 'pizza_raw_material.pizza_id', '=', 'pizzas.id')
+            ->join('raw_materials', 'pizza_raw_material.raw_material_id', '=', 'raw_materials.id')
+            ->select('pizza_raw_material.*', 'pizzas.name as pizza_name', 'raw_materials.name as material_name')
+            ->get();
+
+        return json_encode(['items' => $items, 'success' => true]);
     }
 }
