@@ -65,7 +65,27 @@ class Pizaa_raw_materialController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+         $validated = $request->validate([
+            'pizza_id' => ['required', 'numeric'],
+            'raw_material_id' => ['required', 'numeric'],
+            'quantity' => ['required', 'numeric'],
+        ]);
+
+        if ($validated->fails()) {
+            return json_encode(['msj' => 'Error de validación', 'statuscode' => 400]);
+        }
+
+        $item = PizzaRawMaterial::find($id);
+        if (is_null($item)) {
+            return abort(404);
+        }
+
+        $item->pizza_id = $request->pizza_id;
+        $item->raw_material_id = $request->raw_material_id;
+        $item->quantity = $request->quantity;
+        $item->save();
+
+        return json_encode(['item' => $item]);
     }
 
     /**
