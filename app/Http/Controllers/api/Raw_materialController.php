@@ -88,6 +88,14 @@ class Raw_materialController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $material = RawMaterial::find($id);
+        if (is_null($material)) {
+            return abort(404);
+        }
+
+        $material->delete();
+
+        $materials = DB::table('raw_materials')->get();
+        return json_encode(['raw_materials' => $materials, 'success' => true]);
     }
 }
