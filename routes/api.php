@@ -40,3 +40,10 @@ Route::post('/suppliers', [SupplierController::class, 'store']);
 Route::get('/suppliers/{id}', [SupplierController::class, 'show']);
 Route::put('/suppliers/{id}', [SupplierController::class, 'update']);
 Route::delete('/suppliers/{id}', [SupplierController::class, 'destroy']);
+
+//Raw Material
+Route::get('/raw-materials', [RawMaterialController::class, 'index']);
+Route::post('/raw-materials', [RawMaterialController::class, 'store']);
+Route::get('/raw-materials/{id}', [RawMaterialController::class, 'show']);
+Route::put('/raw-materials/{id}', [RawMaterialController::class, 'update']);
+Route::delete('/raw-materials/{id}', [RawMaterialController::class, 'destroy']);
