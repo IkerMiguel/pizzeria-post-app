@@ -33,3 +33,10 @@ Route::post('/branches', [BranchController::class, 'store']);
 Route::get('/branches/{id}', [BranchController::class, 'show']);
 Route::put('/branches/{id}', [BranchController::class, 'update']);
 Route::delete('/branches/{id}', [BranchController::class, 'destroy']);
+
+//Supplier
+Route::get('/suppliers', [SupplierController::class, 'index']);
+Route::post('/suppliers', [SupplierController::class, 'store']);
+Route::get('/suppliers/{id}', [SupplierController::class, 'show']);
+Route::put('/suppliers/{id}', [SupplierController::class, 'update']);
+Route::delete('/suppliers/{id}', [SupplierController::class, 'destroy']);
