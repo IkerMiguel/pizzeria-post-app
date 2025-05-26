@@ -4,6 +4,8 @@ namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Models\order;
 
 class OrderController extends Controller
 {
@@ -12,7 +14,9 @@ class OrderController extends Controller
      */
     public function index()
     {
-        //
+        $orders = DB::table('orders')   
+            ->get();
+        return json_encode(['orders' => $orders]);
     }
 
     /**

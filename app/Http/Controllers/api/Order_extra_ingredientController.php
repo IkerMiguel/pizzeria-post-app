@@ -28,17 +28,13 @@ class Order_extra_ingredientController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
+        $request->validate([
             'order_id' => ['required', 'numeric', 'min:1'],
             'extra_ingredient_id' => ['required', 'numeric', 'min:1'],
             'quantity' => ['required', 'numeric', 'min:1'],
         ]);
 
-        if ($validated->fails()) {
-            return json_encode(['msj' => 'Error de validación', 'statuscode' => 400]);
-        }
-
-        $item = new OrderExtraIngredient();
+        $item = new Order_extra_ingredient();
         $item->order_id = $request->order_id;
         $item->extra_ingredient_id = $request->extra_ingredient_id;
         $item->quantity = $request->quantity;
@@ -52,7 +48,7 @@ class Order_extra_ingredientController extends Controller
      */
     public function show(string $id)
     {
-         $item = OrderExtraIngredient::find($id);
+         $item = Order_extra_ingredient::find($id);
         if (is_null($item)) {
             return abort(404);
         }
@@ -65,17 +61,13 @@ class Order_extra_ingredientController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $validated = $request->validate([
+        $request->validate([
             'order_id' => ['required', 'numeric', 'min:1'],
             'extra_ingredient_id' => ['required', 'numeric', 'min:1'],
             'quantity' => ['required', 'numeric', 'min:1'],
         ]);
 
-        if ($validated->fails()) {
-            return json_encode(['msj' => 'Error de validación', 'statuscode' => 400]);
-        }
-
-        $item = OrderExtraIngredient::find($id);
+        $item = Order_extra_ingredient::find($id);
         if (is_null($item)) {
             return abort(404);
         }
@@ -93,7 +85,7 @@ class Order_extra_ingredientController extends Controller
      */
     public function destroy(string $id)
     {
-        $item = OrderExtraIngredient::find($id);
+        $item = Order_extra_ingredient::find($id);
         if (is_null($item)) {
             return abort(404);
         }
