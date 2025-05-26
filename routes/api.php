@@ -47,3 +47,10 @@ Route::post('/raw-materials', [RawMaterialController::class, 'store']);
 Route::get('/raw-materials/{id}', [RawMaterialController::class, 'show']);
 Route::put('/raw-materials/{id}', [RawMaterialController::class, 'update']);
 Route::delete('/raw-materials/{id}', [RawMaterialController::class, 'destroy']);
+
+//Pizza Raw Material
+Route::get('/pizza-raw-materials', [PizzaRawMaterialController::class, 'index']);
+Route::post('/pizza-raw-materials', [PizzaRawMaterialController::class, 'store']);
+Route::get('/pizza-raw-materials/{id}', [PizzaRawMaterialController::class, 'show']);
+Route::put('/pizza-raw-materials/{id}', [PizzaRawMaterialController::class, 'update']);
+Route::delete('/pizza-raw-materials/{id}', [PizzaRawMaterialController::class, 'destroy']);
