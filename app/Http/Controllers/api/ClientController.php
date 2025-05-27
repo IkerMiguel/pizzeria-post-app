@@ -93,6 +93,21 @@ class ClientController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $client = Client::find($id);
+        if (is_null($client)) {
+            return abort(404);
+        }
+
+        $client->delete();
+
+        // Obtener la lista actualizada de clientes
+        $clients = DB::table('clients')
+            ->join('users', 'clients.user_id', '=', 'users.id')
+            ->leftJoin('orders', 'clients.id', '=', 'orders.client_id')
+            ->select('clients.*', 'users.name as user_name', DB::raw('COUNT(orders.id) as orders_count'))
+            ->groupBy('clients.id', 'users.name')
+            ->get();
+
+        return json_encode(['clients' => $clients, 'success' => true]);
     }
 }
