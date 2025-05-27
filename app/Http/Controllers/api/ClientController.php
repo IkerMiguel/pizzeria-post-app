@@ -27,7 +27,20 @@ class ClientController extends Controller
      */
     public function store(Request $request)
     {
-        //
+         $client = new Client();
+        $client->name = $request->name;
+        $client->user_id = $request->user_id; // Se espera que el cliente tenga un 'user_id' como clave foránea
+        $client->address = $request->address;
+        $client->phone = $request->phone;
+        $client->save();
+
+        // Obtener todos los clientes nuevamente con la información del usuario
+        $clients = DB::table('clients')
+            ->join('users', 'clients.user_id', '=', 'users.id')
+            ->select('clients.*', 'users.name as user_name', 'users.email as user_email')
+            ->get();
+
+        return json_encode(['clients' => $clients]);
     }
 
     /**
@@ -35,7 +48,7 @@ class ClientController extends Controller
      */
     public function show(string $id)
     {
-        //
+        
     }
 
     /**
