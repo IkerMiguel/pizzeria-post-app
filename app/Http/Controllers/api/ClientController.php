@@ -48,7 +48,12 @@ class ClientController extends Controller
      */
     public function show(string $id)
     {
-        
+       
+        $client = Client::find($id);
+        $user = User::find($client->user_id); // Buscar el usuario relacionado con este cliente
+
+        return json_encode(['client' => $client, 'user' => $user]);
+
     }
 
     /**
