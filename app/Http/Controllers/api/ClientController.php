@@ -14,9 +14,11 @@ class ClientController extends Controller
      */
     public function index()
     {
-        $clients = DB::table('clients')
-            ->join('users', 'clients.user_id', '=', 'users.id') // Suponiendo que cada cliente tiene un 'user_id' que es una clave foránea a 'users'
-            ->select('clients.*', 'users.name as user_name', 'users.email as user_email')
+       $clients = DB::table('clients')
+            ->join('users', 'clients.user_id', '=', 'users.id')
+            ->leftJoin('orders', 'clients.id', '=', 'orders.client_id')
+            ->select('clients.*', 'users.name as user_name', DB::raw('COUNT(orders.id) as orders_count'))
+            ->groupBy('clients.id', 'users.name')
             ->get();
 
         return json_encode(['clients' => $clients]);
@@ -27,7 +29,20 @@ class ClientController extends Controller
      */
     public function store(Request $request)
     {
-        //
+         $validated = $request->validate([
+            'user_id' => ['required', 'numeric'],
+            'address' => ['nullable', 'string', 'max:255'],
+            'phone' => ['nullable', 'string', 'max:20'],
+        ]);
+
+        // Crear un nuevo cliente
+        $client = new Client();
+        $client->user_id = $request->user_id;
+        $client->address = $request->address;
+        $client->phone = $request->phone;
+        $client->save();
+
+        return json_encode(['client' => $client]);
     }
 
     /**
@@ -35,7 +50,17 @@ class ClientController extends Controller
      */
     public function show(string $id)
     {
-        //
+       
+        $client = Client::find($id);
+        if (is_null($client)) {
+            return abort(404);
+        }
+
+        // Obtener también las órdenes del cliente
+        $client->load('orders');
+        
+        return json_encode(['client' => $client]);
+
     }
 
     /**
@@ -43,7 +68,24 @@ class ClientController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $validated = $request->validate([
+            'user_id' => ['required', 'numeric'],
+            'address' => ['nullable', 'string', 'max:255'],
+            'phone' => ['nullable', 'string', 'max:20'],
+        ]);
+
+        // Buscar el cliente y actualizar los datos
+        $client = Client::find($id);
+        if (is_null($client)) {
+            return abort(404);
+        }
+
+        $client->user_id = $request->user_id;
+        $client->address = $request->address;
+        $client->phone = $request->phone;
+        $client->save();
+
+        return json_encode(['client' => $client]);
     }
 
     /**
