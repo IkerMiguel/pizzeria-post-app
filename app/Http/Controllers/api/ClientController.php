@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Client;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ClientController extends Controller
 {
@@ -12,7 +14,12 @@ class ClientController extends Controller
      */
     public function index()
     {
-        //
+        $clients = DB::table('clients')
+            ->join('users', 'clients.user_id', '=', 'users.id') // Suponiendo que cada cliente tiene un 'user_id' que es una clave foránea a 'users'
+            ->select('clients.*', 'users.name as user_name', 'users.email as user_email')
+            ->get();
+
+        return json_encode(['clients' => $clients]);
     }
 
     /**

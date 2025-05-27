@@ -67,3 +67,17 @@ Route::get('/orders', [OrderController::class, 'index']);
 
 //Extra Ingredient
 Route::get('/extra-ingredients', [Extra_ingredientController::class, 'index']);
+
+//user
+Route::get('/users', [\App\Http\Controllers\api\UserController::class, 'index']);
+Route::post('/users', [\App\Http\Controllers\api\UserController::class, 'store']);
+Route::get('/users/{id}', [\App\Http\Controllers\api\UserController::class, 'show']);
+Route::put('/users/{id}', [\App\Http\Controllers\api\UserController::class, 'update']);
+Route::delete('/users/{id}', [\App\Http\Controllers\api\UserController::class, 'destroy']);
+
+//client
+Route::get('/clients', [\App\Http\Controllers\api\ClientController::class, 'index']);
+Route::post('/clients', [\App\Http\Controllers\api\ClientController::class, 'store']);
+Route::get('/clients/{id}', [\App\Http\Controllers\api\ClientController::class, 'show']);
+Route::put('/clients/{id}', [\App\Http\Controllers\api\ClientController::class, 'update']);
+Route::delete('/clients/{id}', [\App\Http\Controllers\api\ClientController::class, 'destroy']);
