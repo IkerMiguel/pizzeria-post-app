@@ -23,7 +23,23 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'user_id' => ['required', 'exists:users,id'],
+            'position' => ['required', 'in:cajero,administrador,cocinero,mensajero'],
+            'identification_number' => ['required', 'max:20'],
+            'salary' => ['required', 'numeric'],
+            'hire_date' => ['required', 'date'],
+        ]);
+
+        $employee = new Employee();
+        $employee->user_id = $request->user_id;
+        $employee->position = $request->position;
+        $employee->identification_number = $request->identification_number;
+        $employee->salary = $request->salary;
+        $employee->hire_date = $request->hire_date;
+        $employee->save();
+
+        return json_encode(['employee' => $employee]);
     }
 
     /**
