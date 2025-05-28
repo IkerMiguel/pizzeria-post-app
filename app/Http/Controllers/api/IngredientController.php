@@ -58,9 +58,26 @@ class IngredientController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        //
+        $validate = Validator::make($request->all(), [
+            'name' => ['required', 'max:255']
+        ]);
+
+        if ($validate->fails()) {
+            return response()->json([
+                'msg' => 'Se produjo un error en la validación de la información.',
+                'statusCode' => 400
+            ]);
+        }
+        $ingredient = Ingredient::find($id);
+        if(is_null($ingredient)){
+            return abort(404);
+        }
+        $ingredient->name = $request->name;
+        $ingredient->save();
+
+        return json_encode(['ingredient'=>$ingredient]);
     }
 
     /**
