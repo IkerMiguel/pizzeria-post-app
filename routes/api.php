@@ -18,3 +18,4 @@ Route::delete('/ingredients/{ingredient}', [IngredientController::class, 'destro
 Route::post('/pizza_ingredients', [Pizza_ingredientController::class, 'store'])->name('pizza_ingredient.store');
 Route::get('/pizza_ingredients', [Pizza_ingredientController::class, 'index'])->name('pizza_ingredients');
 Route::get('/pizza_ingredients/{pizza_ingredient}', [Pizza_ingredientController::class, 'show'])->name('pizza_ingredients.show');
+Route::put('/pizza_ingredients/{pizza_ingredient}', [Pizza_ingredientController::class, 'update'])->name('pizza_ingredients.update');

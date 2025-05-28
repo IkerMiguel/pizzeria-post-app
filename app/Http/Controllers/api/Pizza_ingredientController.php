@@ -75,9 +75,31 @@ class Pizza_ingredientController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        //
+        $validate = Validator::make($request->all(), [
+            'pizza_id' => ['required', 'numeric', 'min:1'],
+            'ingredient_id' => ['required', 'numeric', 'min:1']
+        ]);
+
+        if ($validate->fails()) {
+            return response()->json([
+                'msg' => 'Se produjo un error en la validación de la información.',
+                'statusCode' => 400
+            ]);
+        }
+
+        $pizza_ingredient = Pizza_ingredient::find($id);
+
+        if(is_null($pizza_ingredient)){
+            return abort(404);
+        }
+
+        $pizza_ingredient->pizza_id = $request->pizza_id;
+        $pizza_ingredient->ingredient_id = $request->ingredient_id;
+        $pizza_ingredient->save();
+
+        return json_encode(['pizza_ingredient'=>$pizza_ingredient]);
     }
 
     /**
