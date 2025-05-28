@@ -23,7 +23,23 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'user_id' => ['required', 'exists:users,id'],
+            'position' => ['required', 'in:cajero,administrador,cocinero,mensajero'],
+            'identification_number' => ['required', 'max:20'],
+            'salary' => ['required', 'numeric'],
+            'hire_date' => ['required', 'date'],
+        ]);
+
+        $employee = new Employee();
+        $employee->user_id = $request->user_id;
+        $employee->position = $request->position;
+        $employee->identification_number = $request->identification_number;
+        $employee->salary = $request->salary;
+        $employee->hire_date = $request->hire_date;
+        $employee->save();
+
+        return json_encode(['employee' => $employee]);
     }
 
     /**
@@ -31,7 +47,11 @@ class EmployeeController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $employee = Employee::find($id);
+        if (is_null($employee)) {
+            return abort(404);
+        }
+        return json_encode(['employee' => $employee]);
     }
 
     /**
@@ -39,7 +59,27 @@ class EmployeeController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'user_id' => ['required', 'exists:users,id'],
+            'position' => ['required', 'in:cajero,administrador,cocinero,mensajero'],
+            'identification_number' => ['required', 'max:20'],
+            'salary' => ['required', 'numeric'],
+            'hire_date' => ['required', 'date'],
+        ]);
+
+        $employee = Employee::find($id);
+        if (is_null($employee)) {
+            return abort(404);
+        }
+
+        $employee->user_id = $request->user_id;
+        $employee->position = $request->position;
+        $employee->identification_number = $request->identification_number;
+        $employee->salary = $request->salary;
+        $employee->hire_date = $request->hire_date;
+        $employee->save();
+
+        return json_encode(['employee' => $employee]);
     }
 
     /**
@@ -47,6 +87,14 @@ class EmployeeController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+         $employee = Employee::find($id);
+        if (is_null($employee)) {
+            return abort(404);
+        }
+
+        $employee->delete();
+
+        $employees = DB::table('employees')->get();
+        return json_encode(['employees' => $employees, 'success' => true]);
     }
 }
