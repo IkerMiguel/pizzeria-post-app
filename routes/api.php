@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\api\Extra_ingredientController;
 use App\Http\Controllers\api\IngredientController;
 use App\Http\Controllers\api\Pizza_ingredientController;
 use Illuminate\Http\Request;
@@ -20,3 +21,5 @@ Route::get('/pizza_ingredients', [Pizza_ingredientController::class, 'index'])->
 Route::get('/pizza_ingredients/{pizza_ingredient}', [Pizza_ingredientController::class, 'show'])->name('pizza_ingredients.show');
 Route::put('/pizza_ingredients/{pizza_ingredient}', [Pizza_ingredientController::class, 'update'])->name('pizza_ingredients.update');
 Route::delete('/pizza_ingredients/{pizza_ingredient}', [Pizza_ingredientController::class, 'destroy'])->name('pizza_ingredients.destroy');
+
+Route::get('/extra_ingredients', [Extra_ingredientController::class, 'index'])->name('extra_ingredients');
