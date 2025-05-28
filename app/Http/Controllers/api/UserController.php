@@ -1,61 +1,77 @@
 <?php
-
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
-use Illuminate\Support\Facades\DB;
-
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-  public function index()
-{
-    $users = DB::table('users')
-        ->leftJoin('employes', 'users.id', '=', 'employes.user_id') // Relación con la tabla employes
-        ->leftJoin('clients', 'users.id', '=', 'clients.user_id') // Relación con la tabla clients
-        ->select(
-            'users.id', 'users.name', 'users.email', 'users.role', 
-            'employes.*', 'clients.*', 'users.created_at', 'users.updated_at'
-        )
-        ->get();
+    // Obtener todos los usuarios
+    public function index()
+    {
+        return response()->json(User::with(['client', 'employee'])->get());
+    }
 
-    return json_encode(['users' => $users]);
-}
-
-    /**
-     * Store a newly created resource in storage.
-     */
+    // Crear un nuevo usuario
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name'     => 'required|string|max:255',
+            'email'    => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:6',
+            'role'     => ['required', Rule::in(['cliente', 'empleado'])],
+        ]);
+
+        $user = User::create([
+            'name'     => $request->name,
+            'email'    => $request->email,
+            'password' => Hash::make($request->password),
+            'role'     => $request->role,
+        ]);
+
+        return response()->json($user, 201);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    // Mostrar un solo usuario
+    public function show($id)
     {
-        //
+        $user = User::with(['client', 'employee'])->findOrFail($id);
+        return response()->json($user);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    // Actualizar usuario
+    public function update(Request $request, $id)
     {
-        //
+        $user = User::findOrFail($id);
+
+        $request->validate([
+            'name'     => 'sometimes|required|string|max:255',
+            'email'    => ['sometimes', 'required', 'email', Rule::unique('users')->ignore($user->id)],
+            'password' => 'nullable|string|min:6',
+            'role'     => ['sometimes', 'required', Rule::in(['cliente', 'empleado'])],
+        ]);
+
+        $user->name  = $request->name ?? $user->name;
+        $user->email = $request->email ?? $user->email;
+        if ($request->filled('password')) {
+            $user->password = Hash::make($request->password);
+        }
+        $user->role = $request->role ?? $user->role;
+
+        $user->save();
+
+        return response()->json($user);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    // Eliminar usuario
+    public function destroy($id)
     {
-        //
+        $user = User::findOrFail($id);
+        $user->delete();
+
+        return response()->json(['message' => 'Usuario eliminado']);
     }
 }
