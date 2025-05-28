@@ -53,9 +53,23 @@ class Pizza_ingredientController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($id)
     {
-        //
+        $pizza_ingredient = DB::table('pizza_ingredient')
+        ->join('pizzas', 'pizza_ingredient.pizza_id', '=', 'pizzas.id')
+        ->join('ingredients', 'pizza_ingredient.ingredient_id', '=', 'ingredients.id')
+        ->select(
+            'pizza_ingredient.*',
+            'pizzas.name as pizza_name',
+            'ingredients.name as ingredient_name'
+        )
+        ->where('pizza_ingredient.id', $id)
+        ->first();
+
+        if(is_null($pizza_ingredient)){
+            return abort(404);
+        }
+        return json_encode(['pizza_ingredient'=>$pizza_ingredient]);
     }
 
     /**
