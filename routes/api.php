@@ -2,6 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\api\ClientController;
+use App\Http\Controllers\api\UserController;
 use App\Http\Controllers\api\BrancheController;
 use App\Http\Controllers\api\SupplierController;
 use App\Http\Controllers\api\Raw_materialController;
@@ -11,6 +13,7 @@ use App\Http\Controllers\api\Order_extra_ingredientController;
 use App\Http\Controllers\api\PizzaController;
 use App\Http\Controllers\api\OrderController;
 use App\Http\Controllers\api\Extra_ingredientController;
+use App\Http\Controllers\api\EmployeeController;
 
 
 Route::get('/user', function (Request $request) {
@@ -68,16 +71,23 @@ Route::get('/orders', [OrderController::class, 'index']);
 //Extra Ingredient
 Route::get('/extra-ingredients', [Extra_ingredientController::class, 'index']);
 
-//user
-Route::get('/users', [\App\Http\Controllers\api\UserController::class, 'index']);
-Route::post('/users', [\App\Http\Controllers\api\UserController::class, 'store']);
-Route::get('/users/{id}', [\App\Http\Controllers\api\UserController::class, 'show']);
-Route::put('/users/{id}', [\App\Http\Controllers\api\UserController::class, 'update']);
-Route::delete('/users/{id}', [\App\Http\Controllers\api\UserController::class, 'destroy']);
-
 //client
-Route::get('/clients', [\App\Http\Controllers\api\ClientController::class, 'index']);
-Route::post('/clients', [\App\Http\Controllers\api\ClientController::class, 'store']);
-Route::get('/clients/{id}', [\App\Http\Controllers\api\ClientController::class, 'show']);
-Route::put('/clients/{id}', [\App\Http\Controllers\api\ClientController::class, 'update']);
-Route::delete('/clients/{id}', [\App\Http\Controllers\api\ClientController::class, 'destroy']);
+Route::get('/clients', [ClientController::class, 'index']);
+Route::post('/clients', [ClientController::class, 'store']);
+Route::get('/clients/{id}', [ClientController::class, 'show']);
+Route::put('/clients/{id}', [ClientController::class, 'update']);
+Route::delete('/clients/{id}', [ClientController::class, 'destroy']);
+
+//user
+Route::get('/users', [UserController::class, 'index']);
+Route::post('/users', [UserController::class, 'store']);
+Route::get('/users/{id}', [UserController::class, 'show']);
+Route::put('/users/{id}', [UserController::class, 'update']);
+Route::delete('/users/{id}', [UserController::class, 'destroy']);
+
+//Employee
+Route::get('/employees', [EmployeeController::class, 'index']);
+Route::post('/employees', [EmployeeController::class, 'store']);
+Route::get('/employees/{id}', [EmployeeController::class, 'show']);
+Route::put('/employees/{id}', [EmployeeController::class, 'update']);
+Route::delete('/employees/{id}', [EmployeeController::class, 'destroy']);

@@ -3,69 +3,84 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Client;
 use Illuminate\Http\Request;
+use App\Models\Client;
 use Illuminate\Support\Facades\DB;
 
 class ClientController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-       $clients = DB::table('clients')
+        $clients = DB::table('clients')
             ->join('users', 'clients.user_id', '=', 'users.id')
             ->leftJoin('orders', 'clients.id', '=', 'orders.client_id')
-            ->select('clients.*', 'users.name as user_name', DB::raw('COUNT(orders.id) as orders_count'))
-            ->groupBy('clients.id', 'users.name')
+            ->select(
+                'clients.id',
+                'clients.user_id',
+                'clients.address',
+                'clients.phone',
+                'clients.created_at',
+                'clients.updated_at',
+                'users.name as user_name',
+                DB::raw('COUNT(orders.id) as orders_count')
+            )
+            ->groupBy(
+                'clients.id',
+                'clients.user_id',
+                'clients.address',
+                'clients.phone',
+                'clients.created_at',
+                'clients.updated_at',
+                'users.name'
+            )
             ->get();
 
-        return json_encode(['clients' => $clients]);
+        return response()->json(['clients' => $clients]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-         $validated = $request->validate([
+        $validated = $request->validate([
             'user_id' => ['required', 'numeric'],
             'address' => ['nullable', 'string', 'max:255'],
             'phone' => ['nullable', 'string', 'max:20'],
         ]);
 
-        // Crear un nuevo cliente
-        $client = new Client();
-        $client->user_id = $request->user_id;
-        $client->address = $request->address;
-        $client->phone = $request->phone;
-        $client->save();
+        $client = Client::create($validated);
 
-        return json_encode(['client' => $client]);
+        return response()->json(['client' => $client]);
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
-       
-        $client = Client::find($id);
-        if (is_null($client)) {
+        $client = DB::table('clients')
+            ->join('users', 'clients.user_id', '=', 'users.id')
+            ->select(
+                'clients.id',
+                'clients.user_id',
+                'clients.address',
+                'clients.phone',
+                'clients.created_at',
+                'clients.updated_at',
+                'users.name as user_name'
+            )
+            ->where('clients.id', $id)
+            ->first();
+
+        if (!$client) {
             return abort(404);
         }
 
-        // Obtener también las órdenes del cliente
-        $client->load('orders');
-        
-        return json_encode(['client' => $client]);
+        $orders = DB::table('orders')
+            ->where('client_id', $id)
+            ->get();
 
+        return response()->json([
+            'client' => $client,
+            'orders' => $orders,
+        ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
         $validated = $request->validate([
@@ -74,25 +89,50 @@ class ClientController extends Controller
             'phone' => ['nullable', 'string', 'max:20'],
         ]);
 
-        // Buscar el cliente y actualizar los datos
         $client = Client::find($id);
-        if (is_null($client)) {
+        if (!$client) {
             return abort(404);
         }
 
-        $client->user_id = $request->user_id;
-        $client->address = $request->address;
-        $client->phone = $request->phone;
-        $client->save();
+        $client->update($validated);
 
-        return json_encode(['client' => $client]);
+        return response()->json(['client' => $client]);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
-        //
+        $client = Client::find($id);
+        if (!$client) {
+            return abort(404);
+        }
+
+        $client->delete();
+
+        // Lista actualizada
+        $clients = DB::table('clients')
+            ->join('users', 'clients.user_id', '=', 'users.id')
+            ->leftJoin('orders', 'clients.id', '=', 'orders.client_id')
+            ->select(
+                'clients.id',
+                'clients.user_id',
+                'clients.address',
+                'clients.phone',
+                'clients.created_at',
+                'clients.updated_at',
+                'users.name as user_name',
+                DB::raw('COUNT(orders.id) as orders_count')
+            )
+            ->groupBy(
+                'clients.id',
+                'clients.user_id',
+                'clients.address',
+                'clients.phone',
+                'clients.created_at',
+                'clients.updated_at',
+                'users.name'
+            )
+            ->get();
+
+        return response()->json(['clients' => $clients, 'success' => true]);
     }
 }
