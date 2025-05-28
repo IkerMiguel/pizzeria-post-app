@@ -29,7 +29,25 @@ class Pizza_ingredientController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validate = Validator::make($request->all(), [
+            'pizza_id' => ['required', 'numeric', 'min:1'],
+            'ingredient_id' => ['required', 'numeric', 'min:1']
+        ]);
+
+        if ($validate->fails()) {
+            return response()->json([
+                'msg' => 'Se produjo un error en la validación de la información.',
+                'statusCode' => 400
+            ]);
+        }
+
+        $pizza_ingredient = new Pizza_ingredient();
+
+        $pizza_ingredient->pizza_id = $request->pizza_id;
+        $pizza_ingredient->ingredient_id = $request->ingredient_id;
+        $pizza_ingredient->save();
+
+        return json_encode(['pizza_ingredient'=>$pizza_ingredient]);
     }
 
     /**
