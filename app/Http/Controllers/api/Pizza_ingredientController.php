@@ -105,8 +105,14 @@ class Pizza_ingredientController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        //
+        $pizza_ingredient = Pizza_ingredient::find($id);
+
+        if(is_null($pizza_ingredient)){
+            return abort(404);
+        }
+        $pizza_ingredient->delete();
+        return json_encode(['pizza_ingredient'=>$pizza_ingredient, 'success'=> true]);
     }
 }
