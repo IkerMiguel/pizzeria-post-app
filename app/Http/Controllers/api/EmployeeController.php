@@ -4,6 +4,8 @@ namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Employee;
+use Illuminate\Support\Facades\DB;
 
 class EmployeeController extends Controller
 {
@@ -12,7 +14,8 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        //
+        $employees = DB::table('employees')->get();
+        return json_encode(['employees' => $employees]);
     }
 
     /**
