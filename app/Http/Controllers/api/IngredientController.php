@@ -83,8 +83,10 @@ class IngredientController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        //
+        $ingredient = Ingredient::find($id);
+        $ingredient->delete();
+        return json_encode(['ingredient'=>$ingredient, 'success'=> true]);
     }
 }

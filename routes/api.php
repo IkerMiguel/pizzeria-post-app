@@ -12,3 +12,4 @@ Route::post('/ingredients', [IngredientController::class, 'store'])->name('ingre
 Route::get('/ingredients', [IngredientController::class, 'index'])->name('ingredients');
 Route::get('/ingredients/{ingredient}', [IngredientController::class, 'show'])->name('ingredients.show');
 Route::put('/ingredients/{ingredient}', [IngredientController::class, 'update'])->name('ingredients.update');
+Route::delete('/ingredients/{ingredient}', [IngredientController::class, 'destroy'])->name('ingredients.destroy');
