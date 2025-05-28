@@ -10,3 +10,4 @@ Route::get('/user', function (Request $request) {
 
 Route::post('/ingredients', [IngredientController::class, 'store'])->name('ingredients.store');
 Route::get('/ingredients', [IngredientController::class, 'index'])->name('ingredients');
+Route::get('/ingredients/{ingredient}', [IngredientController::class, 'show'])->name('ingredients.show');

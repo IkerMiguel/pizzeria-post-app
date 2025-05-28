@@ -46,9 +46,13 @@ class IngredientController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($id)
     {
-        //
+        $ingredient = Ingredient::find($id);
+        if(is_null($ingredient)){
+            return abort(404);
+        }
+        return json_encode(['ingredient'=>$ingredient]);
     }
 
     /**
