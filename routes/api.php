@@ -91,3 +91,14 @@ Route::post('/employees', [EmployeeController::class, 'store']);
 Route::get('/employees/{id}', [EmployeeController::class, 'show']);
 Route::put('/employees/{id}', [EmployeeController::class, 'update']);
 Route::delete('/employees/{id}', [EmployeeController::class, 'destroy']);
+
+//Pizza 
+Route::get('/pizzas', [PizzaController::class, 'index']);
+Route::post('/pizzas', [PizzaController::class, 'store']);
+Route::get('/pizzas/{id}', [PizzaController::class, 'show']);
+Route::put('/pizzas/{id}', [PizzaController::class, 'update']);
+Route::delete('/pizzas/{id}', [PizzaController::class, 'destroy']);
+
+
+
+
