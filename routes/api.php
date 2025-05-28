@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\api\IngredientController;
+use App\Http\Controllers\api\Pizza_ingredientController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -13,3 +14,5 @@ Route::get('/ingredients', [IngredientController::class, 'index'])->name('ingred
 Route::get('/ingredients/{ingredient}', [IngredientController::class, 'show'])->name('ingredients.show');
 Route::put('/ingredients/{ingredient}', [IngredientController::class, 'update'])->name('ingredients.update');
 Route::delete('/ingredients/{ingredient}', [IngredientController::class, 'destroy'])->name('ingredients.destroy');
+
+Route::get('/pizza_ingredient', [Pizza_ingredientController::class, 'index'])->name('pizza_ingredient');
