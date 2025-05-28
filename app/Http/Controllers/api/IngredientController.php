@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Ingredient;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class IngredientController extends Controller
 {
@@ -24,7 +25,22 @@ class IngredientController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validate = Validator::make($request->all(), [
+            'name' => ['required', 'max:255']
+        ]);
+
+        if ($validate->fails()) {
+            return response()->json([
+                'msg' => 'Se produjo un error en la validación de la información.',
+                'statusCode' => 400
+            ]);
+        }
+
+        $ingredient = new Ingredient();
+        $ingredient->name = $request->name;
+        $ingredient->save();
+
+        return json_encode(['ingredient'=>$ingredient]);
     }
 
     /**
