@@ -103,9 +103,38 @@ class OrderController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        //
+        $validate = Validator::make($request->all(), [
+            'client_id' => ['required', 'numeric', 'min:1'],
+            'branch_id' => ['required', 'numeric', 'min:1'],
+            'total_price' => ['required', 'numeric', 'regex:/^\d{1,6}(\.\d{1,2})?$/'],
+            'status' => ['required', 'in:pendiente,en_preparacion,listo,entregado'],
+            'delivery_type' => ['required', 'in:en_local,a_domicilio']
+        ]);
+
+        if ($validate->fails()) {
+            return response()->json([
+                'msg' => 'Se produjo un error en la validación de la información.',
+                'statusCode' => 400
+            ]);
+        }
+
+        $order = Order::find($id);
+
+        if(is_null($order)){
+            return abort(404);
+        }
+
+        $order->client_id = $request->client_id;
+        $order->branch_id = $request->branch_id;
+        $order->total_price = $request->total_price;
+        $order->status = $request->status;
+        $order->delivery_type = $request->delivery_type;
+        $order->delivery_person_id = $request->delivery_person_id;
+        $order->save();
+
+        return json_encode(['order' => $order]);
     }
 
     /**
