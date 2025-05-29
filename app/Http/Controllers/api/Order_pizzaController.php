@@ -106,6 +106,12 @@ class Order_pizzaController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $order_pizza = Order_pizza::find($id);
+
+        if(is_null($order_pizza)){
+            return abort(404);
+        }
+        $order_pizza->delete();
+        return json_encode(['order_pizza'=>$order_pizza, 'success'=> true]);
     }
 }
