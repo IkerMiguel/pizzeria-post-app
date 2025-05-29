@@ -72,9 +72,33 @@ class Order_pizzaController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        //
+        $validate = Validator::make($request->all(), [
+            'order_id' => ['required', 'numeric', 'min:1'],
+            'pizza_size_id' => ['required', 'numeric', 'min:1'],
+            'quantity' => ['required', 'numeric', 'min:1']
+        ]);
+
+        if ($validate->fails()) {
+            return response()->json([
+                'msg' => 'Se produjo un error en la validación de la información.',
+                'statusCode' => 400
+            ]);
+        }
+
+        $order_pizza = Order_pizza::find($id);
+
+        if(is_null($order_pizza)){
+            return abort(404);
+        }
+
+        $order_pizza->order_id = $request->order_id;
+        $order_pizza->pizza_size_id = $request->pizza_size_id;
+        $order_pizza->quantity = $request->quantity;
+        $order_pizza->save();
+
+        return json_encode(['order_pizza'=>$order_pizza]);
     }
 
     /**
