@@ -50,6 +50,7 @@ Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.sh
 Route::put('/orders/{order}', [OrderController::class, 'update'])->name('orders.update');
 Route::delete('/orders/{order}', [Extra_ingredientController::class, 'destroy'])->name('orders.destroy');
 
+Route::post('/orders_pizza', [Order_pizzaController::class, 'store'])->name('orders_pizza.store');
 Route::get('/orders_pizza', [Order_pizzaController::class, 'index'])->name('orders_pizza');
 
 //Purchase
