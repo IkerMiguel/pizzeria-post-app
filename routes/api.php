@@ -7,6 +7,7 @@ use App\Http\Controllers\api\UserController;
 use App\Http\Controllers\api\BrancheController;
 use App\Http\Controllers\api\SupplierController;
 use App\Http\Controllers\api\Raw_materialController;
+use App\Http\Controllers\api\Pizza_sizeController;
 use App\Http\Controllers\api\Pizza_raw_materialController;
 use App\Http\Controllers\api\PurchaseController;
 use App\Http\Controllers\api\Order_extra_ingredientController;
@@ -16,6 +17,8 @@ use App\Http\Controllers\api\EmployeeController;
 use App\Http\Controllers\api\IngredientController;
 use App\Http\Controllers\api\Pizaa_ingredientController;
 use App\Http\Controllers\api\Extra_ingredientController;
+
+
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -120,4 +123,13 @@ Route::post('/pizzas', [PizzaController::class, 'store']);
 Route::get('/pizzas/{id}', [PizzaController::class, 'show']);
 Route::put('/pizzas/{id}', [PizzaController::class, 'update']);
 Route::delete('/pizzas/{id}', [PizzaController::class, 'destroy']);
+
+
+// Pizza Size
+Route::get('/pizza-sizes', [Pizza_sizeController::class, 'index']);
+Route::post('/pizza-sizes', [Pizza_sizeController::class, 'store']);
+Route::get('/pizza-sizes/{id}', [Pizza_sizeController::class, 'show']);
+Route::put('/pizza-sizes/{id}', [Pizza_sizeController::class, 'update']);
+Route::delete('/pizza-sizes/{id}', [Pizza_sizeController::class, 'destroy']);
+
 

@@ -8,7 +8,7 @@ use App\Models\Pizza_ingredient;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
-class Pizaa_ingredientController extends Controller
+class Pizza_ingredientController extends Controller
 {
     /**
      * Display a listing of the resource.
