@@ -50,6 +50,7 @@ Route::post('/orders_pizza', [Order_pizzaController::class, 'store'])->name('ord
 Route::get('/orders_pizza', [Order_pizzaController::class, 'index'])->name('orders_pizza');
 Route::get('/orders_pizza/{order_pizza}', [Order_pizzaController::class, 'show'])->name('orders_pizza.show');
 Route::put('/orders_pizza/{order_pizza}', [Order_pizzaController::class, 'update'])->name('orders_pizza.update');
+Route::delete('/orders_pizza/{order_pizza}', [Order_pizzaController::class, 'destroy'])->name('orders_pizza.destroy');
 
 //Purchase
 Route::get('/purchases', [PurchaseController::class, 'index']);
