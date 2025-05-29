@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Order_pizza;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class Order_pizzaController extends Controller
 {
@@ -34,7 +36,25 @@ class Order_pizzaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validate = Validator::make($request->all(), [
+            'order_id' => ['required', 'numeric', 'min:1'],
+            'pizza_size_id' => ['required', 'numeric', 'min:1'],
+            'quantity' => ['required', 'numeric', 'min:1']
+        ]);
+
+        if ($validate->fails()) {
+            return response()->json([
+                'msg' => 'Se produjo un error en la validación de la información.',
+                'statusCode' => 400
+            ]);
+        }
+
+        $order_pizza = new Order_pizza();
+        $order_pizza->order_id = $request->order_id;
+        $order_pizza->pizza_size_id = $request->pizza_size_id;
+        $order_pizza->quantity = $request->quantity;
+        $order_pizza->save();
+        return json_encode(['order_pizza'=>$order_pizza]);
     }
 
     /**
