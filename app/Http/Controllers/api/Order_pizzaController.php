@@ -4,20 +4,15 @@ namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Extra_ingredient;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Validator;
 
-class Extra_ingredientController extends Controller
+class Order_pizzaController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $extra_ingredients = DB::table('extra_ingredients')
-            ->get();
-        return json_encode(['extra_ingredients' => $extra_ingredients]);
+        //
     }
 
     /**

@@ -79,10 +79,10 @@ class IngredientController extends Controller
 
         return json_encode(['ingredient'=>$ingredient]);
     }
-
     /**
      * Remove the specified resource from storage.
      */
+
     public function destroy($id)
     {
         $ingredient = Ingredient::find($id);

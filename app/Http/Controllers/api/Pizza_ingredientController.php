@@ -8,7 +8,7 @@ use App\Models\Pizza_ingredient;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
-class Pizza_ingredientController extends Controller
+class Pizaa_ingredientController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -70,7 +70,7 @@ class Pizza_ingredientController extends Controller
             return abort(404);
         }
         return json_encode(['pizza_ingredient'=>$pizza_ingredient]);
-    }
+    {
 
     /**
      * Update the specified resource in storage.
