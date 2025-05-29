@@ -142,6 +142,12 @@ class OrderController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $order = Order::find($id);
+
+        if(is_null($order)){
+            return abort(404);
+        }
+        $order->delete();
+        return json_encode(['order'=>$order, 'success'=> true]);
     }
 }
