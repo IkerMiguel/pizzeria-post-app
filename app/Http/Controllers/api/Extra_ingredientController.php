@@ -17,7 +17,7 @@ class Extra_ingredientController extends Controller
     {
         $extra_ingredients = DB::table('extra_ingredients')
             ->get();
-        return json_encode(['extra_ingredients'=>$extra_ingredients]);
+        return json_encode(['extra_ingredients' => $extra_ingredients]);
     }
 
     /**
