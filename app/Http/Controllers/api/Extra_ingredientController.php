@@ -25,7 +25,24 @@ class Extra_ingredientController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validate = Validator::make($request->all(), [
+            'name' => ['required', 'max:255'],
+            'price' => ['required', 'numeric', 'regex:/^\d{1,6}(\.\d{1,2})?$/']
+        ]);
+
+        if ($validate->fails()) {
+            return response()->json([
+                'msg' => 'Se produjo un error en la validación de la información.',
+                'statusCode' => 400
+            ]);
+        }
+
+        $extra_ingredient = new Extra_ingredient();
+        $extra_ingredient->name = $request->name;
+        $extra_ingredient->price = $request->price;
+
+        $extra_ingredient->save();
+        return json_encode(['extra_ingredient'=>$extra_ingredient]);
     }
 
     /**
