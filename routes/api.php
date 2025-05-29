@@ -17,6 +17,7 @@ use App\Http\Controllers\api\EmployeeController;
 use App\Http\Controllers\api\IngredientController;
 use App\Http\Controllers\api\Pizza_ingredientController;
 use App\Http\Controllers\api\Extra_ingredientController;
+use App\Http\Controllers\api\Order_pizzaController;
 
 
 
@@ -48,6 +49,8 @@ Route::get('/orders', [OrderController::class, 'index'])->name('orders');
 Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
 Route::put('/orders/{order}', [OrderController::class, 'update'])->name('orders.update');
 Route::delete('/orders/{order}', [Extra_ingredientController::class, 'destroy'])->name('orders.destroy');
+
+Route::get('/orders_pizza', [Order_pizzaController::class, 'index'])->name('orders_pizza');
 
 //Purchase
 Route::get('/purchases', [PurchaseController::class, 'index']);
