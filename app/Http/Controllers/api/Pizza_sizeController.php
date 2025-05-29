@@ -4,46 +4,76 @@ namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Pizza_size;
+use Illuminate\Support\Facades\DB;
 
-class Pizaa_sizeController extends Controller
+class Pizza_sizeController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $items = DB::table('pizza_size')
+            ->join('pizzas', 'pizza_size.pizza_id', '=', 'pizzas.id')
+            ->select('pizza_size.*', 'pizzas.name as pizza_name')
+            ->get();
+
+        return response()->json(['items' => $items]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'pizza_id' => ['required', 'numeric'],
+            'size' => ['required', 'in:pequeña,mediana,grande'],
+            'price' => ['required', 'numeric'],
+        ]);
+
+        $item = Pizza_size::create($validated);
+
+        return response()->json(['item' => $item]);
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
-        //
+        $item = Pizza_size::find($id);
+        if (is_null($item)) {
+            return abort(404);
+        }
+
+        return response()->json(['item' => $item]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
-        //
+        $validated = $request->validate([
+            'pizza_id' => ['required', 'numeric'],
+            'size' => ['required', 'in:pequeña,mediana,grande'],
+            'price' => ['required', 'numeric'],
+        ]);
+
+        $item = Pizza_size::find($id);
+        if (is_null($item)) {
+            return abort(404);
+        }
+
+        $item->update($validated);
+
+        return response()->json(['item' => $item]);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
-        //
+        $item = Pizza_size::find($id);
+        if (is_null($item)) {
+            return abort(404);
+        }
+
+        $item->delete();
+
+        $items = DB::table('pizza_size')
+            ->join('pizzas', 'pizza_size.pizza_id', '=', 'pizzas.id')
+            ->select('pizza_size.*', 'pizzas.name as pizza_name')
+            ->get();
+
+        return response()->json(['items' => $items, 'success' => true]);
     }
 }

@@ -5,7 +5,7 @@ namespace App\Http\Controllers\api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class Pizaa_ingredientController extends Controller
+class Pizza_ingredientController extends Controller
 {
     /**
      * Display a listing of the resource.
