@@ -49,6 +49,7 @@ Route::delete('/orders/{order}', [Extra_ingredientController::class, 'destroy'])
 Route::post('/orders_pizza', [Order_pizzaController::class, 'store'])->name('orders_pizza.store');
 Route::get('/orders_pizza', [Order_pizzaController::class, 'index'])->name('orders_pizza');
 Route::get('/orders_pizza/{order_pizza}', [Order_pizzaController::class, 'show'])->name('orders_pizza.show');
+Route::put('/orders_pizza/{order_pizza}', [Order_pizzaController::class, 'update'])->name('orders_pizza.update');
 
 //Purchase
 Route::get('/purchases', [PurchaseController::class, 'index']);
