@@ -70,9 +70,34 @@ class OrderController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($id)
     {
-        //
+        $order = DB::table('orders')
+            ->join('clients', 'orders.client_id', '=', 'clients.id')
+            ->join('users as client_users', 'clients.user_id', '=', 'client_users.id')
+            ->join('branches', 'orders.branch_id', '=', 'branches.id')
+            ->leftJoin('employees', 'orders.delivery_person_id', '=', 'employees.id')
+            ->leftJoin('users as employees_users', 'employees.user_id', '=', 'employees_users.id')
+            ->select(
+                'orders.id',
+                'client_users.name as client_name',
+                'branches.name as branch_name',
+                'orders.total_price',
+                'orders.status',
+                'orders.delivery_type',
+                'employees_users.name as employees_name'
+            )
+            ->where('orders.id', $id)
+            ->first();
+
+        if (!$order) {
+            return response()->json([
+                'msg' => 'Orden no encontrada.',
+                'statusCode' => 404
+            ]);
+        }
+
+        return json_encode(['order' => $order]);
     }
 
     /**

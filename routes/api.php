@@ -41,6 +41,7 @@ Route::delete('/extra_ingredients/{extra_ingredient}', [Extra_ingredientControll
 
 Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
 Route::get('/orders', [OrderController::class, 'index'])->name('orders');
+Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
 
 //Purchase
 Route::get('/purchases', [PurchaseController::class, 'index']);
