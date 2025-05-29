@@ -70,7 +70,7 @@ class Pizaa_ingredientController extends Controller
             return abort(404);
         }
         return json_encode(['pizza_ingredient'=>$pizza_ingredient]);
-    {
+    }
 
     /**
      * Update the specified resource in storage.
