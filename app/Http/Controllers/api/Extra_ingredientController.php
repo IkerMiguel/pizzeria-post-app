@@ -88,8 +88,14 @@ class Extra_ingredientController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        //
+        $extra_ingredient = Extra_ingredient::find($id);
+        if(is_null($extra_ingredient)){
+            return abort(404);
+        }
+        $extra_ingredient->delete();
+
+        return json_encode(['extra_ingredient'=>$extra_ingredient, 'success'=> true]);
     }
 }
