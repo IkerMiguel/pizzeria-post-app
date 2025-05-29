@@ -37,6 +37,7 @@ Route::post('/extra_ingredients', [Extra_ingredientController::class, 'store'])-
 Route::get('/extra_ingredients', [Extra_ingredientController::class, 'index'])->name('extra_ingredients');
 Route::get('/extra_ingredients/{extra_ingredient}', [Extra_ingredientController::class, 'show'])->name('extra_ingredients.show');
 Route::put('/extra_ingredients/{extra_ingredient}', [Extra_ingredientController::class, 'update'])->name('extra_ingredients.update');
+Route::delete('/extra_ingredients/{extra_ingredient}', [Extra_ingredientController::class, 'destroy'])->name('extra_ingredients.destroy');
 
 //Purchase
 Route::get('/purchases', [PurchaseController::class, 'index']);
