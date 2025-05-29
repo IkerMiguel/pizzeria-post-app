@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\api\Extra_ingredientController;
+use App\Http\Controllers\api\IngredientController;
+use App\Http\Controllers\api\Pizza_ingredientController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\api\ClientController;
@@ -19,6 +22,20 @@ use App\Http\Controllers\api\EmployeeController;
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
+
+Route::post('/ingredients', [IngredientController::class, 'store'])->name('ingredients.store');
+Route::get('/ingredients', [IngredientController::class, 'index'])->name('ingredients');
+Route::get('/ingredients/{ingredient}', [IngredientController::class, 'show'])->name('ingredients.show');
+Route::put('/ingredients/{ingredient}', [IngredientController::class, 'update'])->name('ingredients.update');
+Route::delete('/ingredients/{ingredient}', [IngredientController::class, 'destroy'])->name('ingredients.destroy');
+
+Route::post('/pizza_ingredients', [Pizza_ingredientController::class, 'store'])->name('pizza_ingredient.store');
+Route::get('/pizza_ingredients', [Pizza_ingredientController::class, 'index'])->name('pizza_ingredients');
+Route::get('/pizza_ingredients/{pizza_ingredient}', [Pizza_ingredientController::class, 'show'])->name('pizza_ingredients.show');
+Route::put('/pizza_ingredients/{pizza_ingredient}', [Pizza_ingredientController::class, 'update'])->name('pizza_ingredients.update');
+Route::delete('/pizza_ingredients/{pizza_ingredient}', [Pizza_ingredientController::class, 'destroy'])->name('pizza_ingredients.destroy');
+
+Route::get('/extra_ingredients', [Extra_ingredientController::class, 'index'])->name('extra_ingredients');
 
 //Purchase 
 Route::get('/purchases', [PurchaseController::class, 'index']);
@@ -98,7 +115,4 @@ Route::post('/pizzas', [PizzaController::class, 'store']);
 Route::get('/pizzas/{id}', [PizzaController::class, 'show']);
 Route::put('/pizzas/{id}', [PizzaController::class, 'update']);
 Route::delete('/pizzas/{id}', [PizzaController::class, 'destroy']);
-
-
-
 
