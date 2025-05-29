@@ -35,6 +35,7 @@ Route::delete('/pizza_ingredients/{pizza_ingredient}', [Pizaa_ingredientControll
 
 Route::post('/extra_ingredients', [Extra_ingredientController::class, 'store'])->name('extra_ingredients.store');
 Route::get('/extra_ingredients', [Extra_ingredientController::class, 'index'])->name('extra_ingredients');
+Route::get('/extra_ingredients/{extra_ingredient}', [Extra_ingredientController::class, 'show'])->name('extra_ingredients.show');
 
 //Purchase
 Route::get('/purchases', [PurchaseController::class, 'index']);

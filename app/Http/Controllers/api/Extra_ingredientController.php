@@ -48,9 +48,13 @@ class Extra_ingredientController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($id)
     {
-        //
+        $extra_ingredient = Extra_ingredient::find($id);
+        if(is_null($extra_ingredient)){
+            return abort(404);
+        }
+        return json_encode(['extra_ingredient'=>$extra_ingredient]);
     }
 
     /**
