@@ -60,9 +60,13 @@ class Order_pizzaController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($id)
     {
-        //
+        $order_pizza = Order_pizza::find($id);
+        if(is_null($order_pizza)){
+            return abort(404);
+        }
+        return json_encode(['order_pizza'=>$order_pizza]);
     }
 
     /**
