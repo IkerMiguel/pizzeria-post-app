@@ -75,7 +75,9 @@ class Order_pizzaController extends Controller
     public function update(Request $request, $id)
     {
         $validate = Validator::make($request->all(), [
-            'name' => ['required', 'max:255']
+            'order_id' => ['required', 'numeric', 'min:1'],
+            'pizza_size_id' => ['required', 'numeric', 'min:1'],
+            'quantity' => ['required', 'numeric', 'min:1']
         ]);
 
         if ($validate->fails()) {
